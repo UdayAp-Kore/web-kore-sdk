@@ -33,7 +33,7 @@ execSync('cd dist && npm init --scope=uday_test -y');
 let parsedPackageJSON = JSON.parse(packageJSON);
 let npmPublishVersion;
 if(args.triggerEvent == 'push'){
-    npmPublishVersion = args.commitId;
+    npmPublishVersion = args.commitId +'.0.0';;
 
 }else{
     npmPublishVersion = parsedPackageJSON.version;
