@@ -39,7 +39,7 @@ let npmPublishVersion;
 if(args.triggerEvent == 'push'){
     let pckVersion = parsedPackageJSON.version.split('.');
 
-    npmPublishVersion = pckVersion[0] + '.' + pckVersion[1] +'.'+ args.commitId;
+    npmPublishVersion = pckVersion[0] + '.' + pckVersion[1] +'.'+ args.commitId,substr(0,8);
 
 }else{
     npmPublishVersion = parsedPackageJSON.version;
