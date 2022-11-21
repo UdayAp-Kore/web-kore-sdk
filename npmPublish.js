@@ -1,4 +1,5 @@
 var fs = require('fs');
+const fse = require('fs-extra');
 const execSync = require('child_process').execSync;
 
 function getArgs () {
@@ -24,28 +25,32 @@ function getArgs () {
     return args;
 }
 const args = getArgs();
+let tempDist = "./temp/dist";
+fse.copySync("./dist", tempDist,{overwrite:true});
+
 
 let packageJSON = fs.readFileSync('package.json',  {encoding:'utf8', flag:'r'} );
 
 
-execSync('cd dist && npm init --scope=uday_test -y');
+execSync('cd temp && npm init --scope=uday_test -y');
 
 let parsedPackageJSON = JSON.parse(packageJSON);
 let npmPublishVersion;
 if(args.triggerEvent == 'push'){
-   let pckVersion = parsedPackageJSON.version.split('.');
+    let pckVersion = parsedPackageJSON.version.split('.');
 
     npmPublishVersion = pckVersion[0] + '.' + pckVersion[1] +'.'+ args.commitId;
 
 }else{
     npmPublishVersion = parsedPackageJSON.version;
 }
+console.log(npmPublishVersion);
 var publishJSON = `
 {
     "name": "@uday_test/kore-web-sdk",
     "version": "${npmPublishVersion}",
     "description": "${parsedPackageJSON.description}",
-    "main": "kore-web-sdk.esm.browser.js",
+    "main": "dist/kore-web-sdk.esm.browser.js",
     "scripts": {
         "test": ""
     },
@@ -54,4 +59,6 @@ var publishJSON = `
     "license": "ISC"
 }`;
 
-fs.writeFileSync('dist/package.json', publishJSON);
+fs.writeFileSync('temp/package.json', publishJSON);
+execSync("cd temp && npm publish --access public")
+
