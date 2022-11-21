@@ -26,12 +26,8 @@ jobs:
         run: npm run build-umd
       - name: Run ESM build
         run: npm run build
-      - name: dist folder commit & push
-        run: git add dist && git commit -m "Latest build update" && git push origin v2/dev
-      - name: Prepare the files for npm publish
+      - name: Prepare and publish the build
         run: node npmPublish.js --commitId=${{github.sha}} --triggerEvent=${{github.event_name}}
-      - name: Publish the package
-        run: cd dist && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.TOKENNPM }}
 
