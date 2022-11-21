@@ -26,9 +26,6 @@ jobs:
         run: npm run build-umd
       - name: Run ESM build
         run: npm run build
-      - name: Check commit ID
-        run: |
-          echo: "${{ github.sha }} / ${{github.event_name}}"
       - name: Prepare the files for npm publish
         run: node npmPublish.js --commitId=${{github.sha}} --triggerEvent=${{github.event_name}}
       - name: Publish the package
