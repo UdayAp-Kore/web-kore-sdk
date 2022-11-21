@@ -26,7 +26,7 @@ jobs:
         run: npm run build
       - name: Check commit ID
         run: |
-          echo:  "${{ github.head_ref }}.${{ github.sha }}"
+          echo: "${{ github.sha }}"
       - name: Prepare the files for npm publish
         run: node npmPublish.js
       - name: Publish the package
