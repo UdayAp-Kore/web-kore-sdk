@@ -26,6 +26,11 @@ function getArgs () {
 const args = getArgs();
 
 let packageJSON = fs.readFileSync('package.json',  {encoding:'utf8', flag:'r'} );
+
+
+execSync('cd dist && npm init --scope=uday_test -y');
+
+let parsedPackageJSON = JSON.parse(packageJSON);
 let npmPublishVersion;
 if(args.triggerEvent == 'push'){
     npmPublishVersion = args.commitId;
@@ -33,10 +38,6 @@ if(args.triggerEvent == 'push'){
 }else{
     npmPublishVersion = parsedPackageJSON.version;
 }
-
-execSync('cd dist && npm init --scope=uday_test -y');
-
-let parsedPackageJSON = JSON.parse(packageJSON);
 var publishJSON = `
 {
     "name": "@uday_test/kore-web-sdk",
