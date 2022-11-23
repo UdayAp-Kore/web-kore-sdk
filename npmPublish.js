@@ -39,14 +39,7 @@ let npmPublishVersion;
 if(args.triggerEvent == 'push'){
     let pckVersion = parsedPackageJSON.version.split('.');
 
-    let commitIdWithZero;
-    if(args.commitId.startsWith('0')){
-        commitIdWithZero = args.commitId;
-    }else{
-        commitIdWithZero = '0'+args.commitId
-    }
-
-    npmPublishVersion = pckVersion[0] + '.' + pckVersion[1] +'.'+ commitIdWithZero;
+    npmPublishVersion = pckVersion[0] + '.' + pckVersion[1] +'.'+ pckVersion[2] +'-rc-'+args.commitId;;
 
 }else{
     npmPublishVersion = parsedPackageJSON.version;
